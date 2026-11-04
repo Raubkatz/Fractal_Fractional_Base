@@ -54,8 +54,6 @@ Everything is in one folder. No packages, no command-line arguments: every scrip
 | `02_hello_world_iris_pytorch.py` | the same in PyTorch |
 | `03_tests_tensorflow.py` | Keras 3 integration test (fit, XLA, save/load, schedules, memory) |
 | `04_tests_pytorch.py` | PyTorch integration test (checkpoints, schedulers, parameter groups, AMP, `torch.compile`, …) |
-| `05_tests_pytorch_vs_tensorflow.py` | PyTorch against Keras 3, with identical inputs |
-| `06_tests_tensorflow_vs_legacy.py` | Keras 3 against the original files, bit for bit |
 | `requirements.txt` | the pinned versions below |
 
 The `_keras3` files need only TensorFlow/Keras, the `_torch` files only PyTorch. Class names, arguments and defaults are the same as in the original files and in both frameworks; in PyTorch the parameters come first and the learning rate is `lr` (`learning_rate=` also works).
@@ -78,7 +76,6 @@ pip install \
     seaborn==0.13.2
 ```
 
-- One framework only: leave out `tensorflow keras` or `torch`. Only `05_…` needs both; `06_…` additionally needs `pip install tf-keras==2.21.0` and the original files.
 - Linux: the default PyTorch wheel includes CUDA (several GB). CPU only: `pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu`. TensorFlow GPU: `"tensorflow[and-cuda]==2.21.0"`. TensorFlow 2.21 has wheels for Python 3.10–3.13 (no Intel Macs).
 - **TensorFlow and PyTorch in one Python process:** import `torch` and `torch._dynamo` *before* `tensorflow`. In the other order, the first PyTorch optimizer step can abort with `LLVM ERROR: inconsistency in registered CommandLine options` (both bundle LLVM). `05_…` shows the safe order.
 - This exact list was installed into a fresh Python 3.12.13 environment, and all six scripts were run in it (`01_…` with its two tours switched off); both hello worlds reproduced the numbers below exactly.
