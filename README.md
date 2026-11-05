@@ -8,17 +8,17 @@ The fractal activation functions were introduced in
 
 > S. Raubitzek, T. Kietreiber, S. Eresheim, A. Buchelt, K. Mallinger. *Fractals in neural networks: Introducing a new class of activation functions.* Communications in Nonlinear Science and Numerical Simulation **161**, 110064 (2026). [doi:10.1016/j.cnsns.2026.110064](https://doi.org/10.1016/j.cnsns.2026.110064) · Preprint: [doi:10.20944/preprints202508.0478.v1](https://doi.org/10.20944/preprints202508.0478.v1) · Code: [github.com/Raubkatz/Fractal_Activation_Functions](https://github.com/Raubkatz/Fractal_Activation_Functions)
 
-> **This repository collects work by many authors.** Its only purpose is to provide **one platform on which all of these optimizers can be used, side by side, with Keras 3 and with PyTorch**.
+> **This repository provides implementations of optimizers and activation functions originating from multiple publications for use with Keras 3 and PyTorch.**
 >
-> **The following methods are not our work, and we do not claim them:**
+> **The following methods originate from the cited external publications:**
 > - the **Herrera-style fractional optimizers** (`FSGD`, `FAdam`, `FRMSprop`, `FAdadelta`, `FAdagrad`, `FAdamW`), developed by **Oscar Herrera-Alcántara** and co-authors [[H1]](#ref-h1), [[H2]](#ref-h2);
 > - the **related-work optimizers**: **AdaGL** by Chen, Zhang & Mu [[R1]](#ref-r1); **FCSGD_GL / FCAdam_GL** by Zhou, Zhao & Huang [[R2]](#ref-r2); **AOFGD** by Xiang, Zhao, Su, Zhou, Ye & Huang [[R3]](#ref-r3);
 > - the **Cantor-based activations**, by Chipera, Du & Tsapara [[C1]](#ref-c1);
 > - the **classical base optimizers** (SGD, momentum, Adam, RMSprop, …) [[B1]–[B10]](#base-optimizers). The baselines used here are Keras' and PyTorch's own implementations.
 >
-> The ideas, the mathematics and the credit belong to these authors. Our part is limited to re-implementing their published update rules in Keras 3 and in PyTorch, from the papers, and testing them side by side. These classes are **not the original authors' code**, and any error in them is ours.
+> The underlying methods and mathematical contributions are attributed to their original authors. The Keras 3 and PyTorch classes are independent implementations of the published update rules, tested within a common framework. These classes are **not the original authors' code**. Responsibility for implementation errors rests with the repository authors.
 >
-> **If you use any of these optimizers or activations, cite the original publications** listed below, with the links given there. You may additionally cite this repository for the Keras 3 / PyTorch implementation. Only the **GL-memory** and **adaptive-memory** optimizers come from our article [[O1]](#ref-o1), and the fractal activations from our earlier article [[O2]](#ref-o2).
+> **Cite the original publications** listed below when using the corresponding optimizers or activations. This repository may additionally be cited for its Keras 3 / PyTorch implementations. The **GL-memory** and **adaptive-memory** optimizers are described in [[O1]](#ref-o1), and the fractal activations in [[O2]](#ref-o2).
 
 ## Attribution and how to cite
 
@@ -30,18 +30,18 @@ The fractal activation functions were introduced in
 | **AOFGD** | `AOFGD_SGD`, `AOFGD_Adam` | **Xiang, Zhao, Su, Zhou, Ye & Huang**, SSRN preprint 2025 [doi:10.2139/ssrn.5717167](https://doi.org/10.2139/ssrn.5717167) [[R3]](#ref-r3) |
 | Classical base optimizers | `keras.optimizers.*`, `torch.optim.*`, and the base rules inside every class | [[B1]–[B10]](#base-optimizers) |
 | Grünwald–Letnikov derivative, short-memory principle | background of `MemoryF*`, `AdaptiveMemoryF*`, `AdaGL`, `FC*_GL` | [[G1]](#ref-g1), [[G2]](#ref-g2) |
-| **Adaptive memory-fractional optimizers** (our paper) | `AdaptiveMemoryFSGD`, `…FRMSprop`, `…FAdam`, `…FAdadelta`, `…FAdagrad`, `…FAdamW`, `…FNadam`, `…FAdamax` | [[O1]](#ref-o1) |
-| **GL-memory optimizers** (our implementation, with norm matching and descent safeguard) | `MemoryFSGD`, `…FRMSprop`, `…FAdam`, `…FAdadelta`, `…FAdagrad`, `…FAdamW`, `…FNadam`, `…FAdamax` | [[O1]](#ref-o1); background [[G1]](#ref-g1), [[G2]](#ref-g2); see also [[R2]](#ref-r2) |
+| **Adaptive memory-fractional optimizers** (introduced in [[O1]](#ref-o1)) | `AdaptiveMemoryFSGD`, `…FRMSprop`, `…FAdam`, `…FAdadelta`, `…FAdagrad`, `…FAdamW`, `…FNadam`, `…FAdamax` | [[O1]](#ref-o1) |
+| **GL-memory optimizers** (custom implementation with norm matching and descent safeguard) | `MemoryFSGD`, `…FRMSprop`, `…FAdam`, `…FAdadelta`, `…FAdagrad`, `…FAdamW`, `…FNadam`, `…FAdamax` | [[O1]](#ref-o1); background [[G1]](#ref-g1), [[G2]](#ref-g2); see also [[R2]](#ref-r2) |
 | **Fractal activation functions** | the nine fixed-depth functions | [[O2]](#ref-o2); mathematical origins [[F1]–[F5]](#fractal-functions-mathematical-origins) |
 | Random-depth variants | `random_depth_*` | extensions in this code base; cite [[O2]](#ref-o2) for the underlying functions |
 | **Cantor-based activations** | `cantor_function_tf`, `cantor_set_activation_tf`, `random_depth_cantor_function_tf` | **Chipera, Du & Tsapara**, [arXiv:2512.14675](https://arxiv.org/abs/2512.14675) [[C1]](#ref-c1); [[F5]](#ref-f5) |
 | Software and data | — | Keras [[S1]](#ref-s1), TensorFlow [[S2]](#ref-s2), scikit-learn [[S3]](#ref-s3), PyTorch [[S4]](#ref-s4); Iris [[D1]](#ref-d1) |
 
-**Original code.** Herrera-Alcántara's own TensorFlow-Keras implementations are available at [ia.azc.uam.mx](http://ia.azc.uam.mx/) (data availability statement of [[H1]](#ref-h1)); [[H2]](#ref-h2) describes his PyTorch implementations. Our classes are independent re-implementations from the papers. For AdaGL, FCSGD_GL/FCAdam_GL and AOFGD we found no code published by the authors. Where the papers leave details open, the choice made here is written in the class docstring (e.g. AOFGD's convergence-evaluation factor from consecutive gradient norms, 10 historical terms for FCSGD_GL/FCAdam_GL). If a result must match an original method exactly, check it against the original publication or code.
+**Original code.** Herrera-Alcántara's own TensorFlow-Keras implementations are available at [ia.azc.uam.mx](http://ia.azc.uam.mx/) (data availability statement of [[H1]](#ref-h1)); [[H2]](#ref-h2) describes his PyTorch implementations. The classes are independent re-implementations from the publications. For AdaGL, FCSGD_GL/FCAdam_GL and AOFGD, no original-author code was identified. Where the publications leave implementation details open, the selected choices are documented in the class docstrings (e.g. AOFGD's convergence-evaluation factor from consecutive gradient norms, 10 historical terms for FCSGD_GL/FCAdam_GL). Exact correspondence with an original method should be checked against the original publication or code.
 
 ## Files
 
-Everything is in one folder. No packages, no command-line arguments: every script has its settings at the top and runs top to bottom, step by step.
+All files are in one folder. The scripts require no command-line arguments; their settings are defined at the top, and execution proceeds sequentially.
 
 | File | Contents |
 |---|---|
@@ -81,7 +81,7 @@ pip install \
 - One framework only: leave out `tensorflow keras` or `torch`. Only `05_…` needs both; `06_…` additionally needs `pip install tf-keras==2.21.0` and the original files.
 - Linux: the default PyTorch wheel includes CUDA (several GB). CPU only: `pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu`. TensorFlow GPU: `"tensorflow[and-cuda]==2.21.0"`. TensorFlow 2.21 has wheels for Python 3.10–3.13 (no Intel Macs).
 - **TensorFlow and PyTorch in one Python process:** import `torch` and `torch._dynamo` *before* `tensorflow`. In the other order, the first PyTorch optimizer step can abort with `LLVM ERROR: inconsistency in registered CommandLine options` (both bundle LLVM). `05_…` shows the safe order.
-- This exact list was installed into a fresh Python 3.12.13 environment, and all six scripts were run in it (`01_…` with its two tours switched off); both hello worlds reproduced the numbers below exactly.
+- The listed versions were installed in a fresh Python 3.12.13 environment. All six scripts were executed (`01_…` with its two tours disabled); both example scripts reproduced the values reported below.
 
 ## Running the scripts
 
@@ -94,7 +94,7 @@ python 05_tests_pytorch_vs_tensorflow.py     # ~9 min
 python 06_tests_tensorflow_vs_legacy.py      # ~14 min, needs tf-keras and the original files
 ```
 
-(times on a 2-core CPU). The hello worlds follow the paper's Iris protocol (70/30 split, Min-Max scaling, Dense 32 → BN → Dropout 0.2 → Dense 64 → BN → Dropout 0.2 → 3 classes, 30 epochs, batch 16, seed 238974) in 15 numbered steps: data, a first look at the activations, the network, one optimizer with every argument explained, training, accuracy / macro precision / recall / F1 / confusion matrix, a look inside the optimizer (GL coefficients, λ_t, Herrera factor), save and reload, a tour of all 35 optimizers (8 built-in baselines + 27 fractional), a tour of all 20 activations, a loop with loss feedback, and the results written to `results_01_…/` or `results_02_…/`.
+(times on a 2-core CPU). The example scripts follow the paper's Iris protocol (70/30 split, Min-Max scaling, Dense 32 → BN → Dropout 0.2 → Dense 64 → BN → Dropout 0.2 → 3 classes, 30 epochs, batch 16, seed 238974) in 15 numbered steps: data loading, activation inspection, network definition, optimizer configuration and arguments, training, accuracy / macro precision / recall / F1 / confusion matrix, optimizer diagnostics (GL coefficients, λ_t, Herrera factor), save and reload, evaluation of all 35 optimizers (8 built-in baselines + 27 fractional), evaluation of all 20 activations, a loop with loss feedback, and results written to `results_01_…/` or `results_02_…/`.
 
 Main example, **AdaptiveMemoryFAdam (ν = 0.75) + decaying cosine** (rank 2 of the paper's Iris table, 0.937 ± 0.037 over 40 runs):
 
@@ -103,7 +103,7 @@ Main example, **AdaptiveMemoryFAdam (ν = 0.75) + decaying cosine** (rank 2 of t
 | Keras 3 (`01_…`) | 0.9111 | 0.9365 | 0.9111 | 0.9136 |
 | PyTorch (`02_…`) | 0.9111 | 0.9217 | 0.9137 | 0.9153 |
 
-The two frameworks draw different initial weights, Dropout masks and batch orders from the same seed, so their single-run numbers (also in the tours) are two independent runs, not a comparison of the frameworks; whether they compute the same thing is tested by `05_…`. One seed is not a benchmark: on Iris the paper's run-to-run standard deviation is 0.03–0.06. With 100 terms the Weierstrass–Mandelbrot variants and `weierstrass_function_tf` diverge (NaN loss), and the Cantor functions pass no gradient; both are properties of the functions. In the PyTorch activation tour `relu` scores 0.33 because BatchNorm's running statistics (paper momentum, Keras 0.99 = PyTorch 0.01) have not settled after 210 steps; in a quick check, the same network with batch statistics reached 0.93.
+The two frameworks draw different initial weights, Dropout masks and batch orders from the same seed. Their single-run results, including the optimizer and activation evaluations, are independent runs rather than a controlled framework comparison; numerical equivalence is tested by `05_…`. Single-seed results are not benchmark estimates: on Iris the paper's run-to-run standard deviation is 0.03–0.06. With 100 terms the Weierstrass–Mandelbrot variants and `weierstrass_function_tf` diverge (NaN loss), and the Cantor functions pass no gradient; both are properties of the functions. In the PyTorch activation evaluation, `relu` scores 0.33 because BatchNorm's running statistics (paper momentum, Keras 0.99 = PyTorch 0.01) have not settled after 210 steps; in a separate check, the same network with batch statistics reached 0.93.
 
 ## Using the optimizers
 
@@ -162,7 +162,7 @@ Paper activations: `modulated_blancmange_curve`, `decaying_cosine_function_tf`, 
 2. `set_current_loss()` now also reaches compiled training steps (the flag is an optimizer variable). Without it (the paper setting) results are identical.
 3. `…AdamW` classes keep the original order (Adam step, then decay); Keras' own pre-step decay is switched off for them.
 4. Activations that compute in float64 return the input dtype instead of always float32 (same result for float32 models).
-5. No memory growth when many models are trained in one process: TensorFlow's all-reduce keeps every traced graph alive (~130–150 MB per model with these activations); our optimizers skip it when there is only one replica. Keras' built-in optimizers are still affected.
+5. No memory growth when many models are trained in one process: TensorFlow's all-reduce keeps every traced graph alive (~130–150 MB per model with these activations); the custom optimizers skip it when there is only one replica. Keras' built-in optimizers are still affected.
 6. Old optimizer checkpoints cannot be loaded into the Keras 3 classes. To run the original files unchanged on TensorFlow ≥ 2.16: `pip install tf-keras==2.21.0`, set `TF_USE_LEGACY_KERAS=1` before importing TensorFlow, and set `tf.keras.optimizers.Optimizer = tf.keras.optimizers.legacy.Optimizer` before importing `class_b_…` / `class_d_…` (this is what `06_…` does).
 
 ## Verification
@@ -318,4 +318,4 @@ Why PyTorch vs Keras is not bit-identical: the two math libraries differ by 1–
 
 ## Citation
 
-Please cite **the original publication of every optimizer and activation you use** (table above: Herrera-Alcántara [[H1]](#ref-h1), [[H2]](#ref-h2); Chen, Zhang & Mu [[R1]](#ref-r1); Zhou, Zhao & Huang [[R2]](#ref-r2); Xiang et al. [[R3]](#ref-r3); Chipera, Du & Tsapara [[C1]](#ref-c1)), our article [[O1]](#ref-o1) for the adaptive-memory and GL-memory optimizers, the experimental comparison and this platform, and [[O2]](#ref-o2) for the fractal activation functions. Full experiment code of the article: [github.com/Raubkatz/FractalAndFractional2026](https://github.com/Raubkatz/FractalAndFractional2026); code of the fractal activation paper: [github.com/Raubkatz/Fractal_Activation_Functions](https://github.com/Raubkatz/Fractal_Activation_Functions).
+Cite **the original publication of each optimizer and activation used** (table above: Herrera-Alcántara [[H1]](#ref-h1), [[H2]](#ref-h2); Chen, Zhang & Mu [[R1]](#ref-r1); Zhou, Zhao & Huang [[R2]](#ref-r2); Xiang et al. [[R3]](#ref-r3); Chipera, Du & Tsapara [[C1]](#ref-c1)), [[O1]](#ref-o1) for the adaptive-memory and GL-memory optimizers, the experimental comparison and this implementation, and [[O2]](#ref-o2) for the fractal activation functions. Full experiment code of the article: [github.com/Raubkatz/FractalAndFractional2026](https://github.com/Raubkatz/FractalAndFractional2026); code of the fractal activation paper: [github.com/Raubkatz/Fractal_Activation_Functions](https://github.com/Raubkatz/Fractal_Activation_Functions).
